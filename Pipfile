@@ -11,10 +11,13 @@ django = "*"
 gunicorn = "*"
 whitenoise = "*"
 dj-database-url = "*"
+speedtest-cli = "*"
+django-countries = "*"
 
 
 [dev-packages]
 
+ipython = "*"
 
 
 [requires]
