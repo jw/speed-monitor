@@ -2,8 +2,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from testspeed.models import Result, Client
-from testspeed.serializers import ResultSerializer, ClientSerializer
+from testspeed.models import Result, Client, Server
+from testspeed.serializers import ResultSerializer, ClientSerializer, ServerSerializer
 
 
 @csrf_exempt
@@ -16,8 +16,23 @@ def client(request):
         data = JSONParser().parse(request)
         serializer = ClientSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
+            instance = serializer.save()
+            return JsonResponse({'pk': instance.pk}, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+
+@csrf_exempt
+def server(request):
+    if request.method == 'GET':
+        result = Server.objects.all()
+        serializer = ServerSerializer(result, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = ServerSerializer(data=data)
+        if serializer.is_valid():
+            instance = serializer.save()
+            return JsonResponse({'pk': instance.pk}, status=201)
         return JsonResponse(serializer.errors, status=400)
 
 

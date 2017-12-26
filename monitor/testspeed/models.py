@@ -17,16 +17,19 @@ class Client(models.Model):
 
 
 class Server(models.Model):
-    identifier = models.IntegerField()
+    identifier = models.IntegerField(unique=True, null=True)
     url = models.CharField(max_length=500)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    lon = models.DecimalField(max_digits=9, decimal_places=6)
+    lat = models.DecimalField(max_digits=9, decimal_places=6)
     name = models.CharField(max_length=500)
     country = CountryField()
     sponsor = models.CharField(max_length=500)
     host = models.CharField(max_length=500)
-    distance = models.FloatField()
+    d = models.FloatField()
     latency = models.FloatField()
+
+    def __str__(self):
+        return '{0} ({1}) in {2} at {3}km.'.format(self.identifier, self.url, self.country.name, self.d)
 
 
 class Result(models.Model):
