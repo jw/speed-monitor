@@ -1,17 +1,29 @@
-from rest_framework import serializers
-from .models import Client, Server, Result
 from django_countries.serializers import CountryFieldMixin
+from rest_framework import serializers
+
+from .models import Client, Server, Result
+
 
 class ClientSerializer(serializers.ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Client
-        fields = ('ip', 'lon', 'lat', 'isp', 'country')
+        fields = ('id', 'ip', 'lon', 'lat', 'isp', 'country')
+
+    def get_id(obj):
+        return serializers.get_pk_field()
 
 
 class ServerSerializer(CountryFieldMixin, serializers.ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Server
         exclude = ('identifier',)
+
+    def get_id(obj):
+        return serializers.get_pk_field()
 
 
 class ResultSerializer(serializers.ModelSerializer):
