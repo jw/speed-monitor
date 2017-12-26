@@ -11,8 +11,8 @@ django = "*"
 gunicorn = "*"
 whitenoise = "*"
 dj-database-url = "*"
-speedtest-cli = "*"
 django-countries = "*"
+djangorestframework = "*"
 
 
 [dev-packages]

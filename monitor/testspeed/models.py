@@ -4,17 +4,20 @@ from django_countries.fields import CountryField
 
 class Client(models.Model):
     ip = models.GenericIPAddressField()
-    longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    lon = models.DecimalField(max_digits=9, decimal_places=6)
+    lat = models.DecimalField(max_digits=9, decimal_places=6)
     isp = models.CharField(max_length=300)
     country = CountryField()
+
+    class Meta:
+        unique_together = ('ip', 'isp')
 
     def __str__(self):
         return '{0} ({1}) from {2}.'.format(self.isp, self.ip, self.country.name)
 
 
 class Server(models.Model):
-    id = models.IntegerField()
+    identifier = models.IntegerField()
     url = models.CharField(max_length=500)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
