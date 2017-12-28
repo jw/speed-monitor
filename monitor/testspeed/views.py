@@ -1,11 +1,15 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
-from testspeed.models import Result, Client, Server
-from testspeed.serializers import ResultSerializer, ClientSerializer, ServerSerializer
+
+from .models import Result, Client, Server
+from .serializers import ResultSerializer, ClientSerializer, ServerSerializer
 
 
 class ClientViewSet(ModelViewSet):
     serializer_class = ClientSerializer
     queryset = Client.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('ip', 'isp')
 
 
 class ServerViewSet(ModelViewSet):
