@@ -29,7 +29,8 @@ class Server(models.Model):
     latency = models.FloatField()
 
     def __str__(self):
-        return '{0} ({1}) in {2} at {3}km.'.format(self.identifier, self.url, self.country.name, self.d)
+        return '{0} ({1}) in {2} at {3}km.'.format(
+            self.identifier, self.url, self.country.name, self.d)
 
 
 class Result(models.Model):
@@ -41,6 +42,10 @@ class Result(models.Model):
     timestamp = models.DateTimeField()
     bytes_sent = models.IntegerField()
     bytes_received = models.IntegerField()
+
+    def __str__(self):
+        return "{0} has download{1}, upload:{2} and ping:{3} from {4}".format(
+            self.client.isp, self.download, self.upload, self.ping, self.server.name)
 
 
 class Results(models.Model):

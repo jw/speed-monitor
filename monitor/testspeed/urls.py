@@ -9,5 +9,3 @@ router.register("servers", ServerViewSet)
 router.register("results", ResultViewSet)
 
 urlpatterns = router.urls
-
-urlpatterns = router.urls

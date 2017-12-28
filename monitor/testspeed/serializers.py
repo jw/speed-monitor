@@ -30,3 +30,6 @@ class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
         fields = ('client', 'download', 'upload', 'ping', 'server', 'timestamp', 'bytes_sent', 'bytes_received')
+
+    def get_id(obj):
+        return serializers.get_pk_field()
