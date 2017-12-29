@@ -46,7 +46,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'sl.urls'
+ROOT_URLCONF = 'monitor.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-WSGI_APPLICATION = 'sl.wsgi.application'
+WSGI_APPLICATION = 'monitor.wsgi.application'
 
 # TODO: make this postgresql?
 DATABASES = {
