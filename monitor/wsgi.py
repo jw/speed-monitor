@@ -1,5 +1,5 @@
 """
-WSGI config for sl project.
+WSGI config for the monitor project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
