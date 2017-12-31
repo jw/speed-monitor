@@ -14,6 +14,7 @@ dj-database-url = "*"
 django-countries = "*"
 djangorestframework = "*"
 django-filter = "*"
+"psycopg2" = "*"
 
 
 [dev-packages]

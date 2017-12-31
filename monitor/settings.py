@@ -70,15 +70,17 @@ REST_FRAMEWORK = {
 
 WSGI_APPLICATION = 'monitor.wsgi.application'
 
-# TODO: make this postgresql?
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'speed-monitor',
+        'USER': 'speed-monitor',
+        'PASSWORD': 'speed-monitor',
+        'HOST': '127.0.0.1',
+        'PORT': '7654',
     }
 }
 
-# TODO: production only?
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
