@@ -17,20 +17,20 @@ class Client(models.Model):
 
 
 class Server(models.Model):
-    identifier = models.IntegerField(unique=True, null=True)
+    identifier = models.IntegerField()
     url = models.CharField(max_length=500)
     lon = models.DecimalField(max_digits=9, decimal_places=6)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     name = models.CharField(max_length=500)
     country = CountryField()
     sponsor = models.CharField(max_length=500)
-    host = models.CharField(max_length=500)
+    host = models.CharField(unique=True, max_length=500)
     d = models.FloatField()
     latency = models.FloatField()
 
     def __str__(self):
-        return '{0} ({1}) in {2} at {3}km.'.format(
-            self.identifier, self.url, self.country.name, self.d)
+        return '{0} in {1} at {2}km.'.format(
+            self.host, self.country.name, self.d)
 
 
 class Result(models.Model):
@@ -50,7 +50,3 @@ class Result(models.Model):
 
 class Results(models.Model):
     results = models.ManyToManyField(Result)
-
-
-class IgnoreServers(models.Model):
-    servers = models.ManyToManyField(Server)

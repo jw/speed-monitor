@@ -20,7 +20,7 @@ class ServerSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
     class Meta:
         model = Server
-        exclude = ('identifier',)
+        fields = '__all__'
 
     def get_id(obj):
         return serializers.get_pk_field()
