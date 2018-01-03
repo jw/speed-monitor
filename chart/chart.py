@@ -89,7 +89,7 @@ class TimeSeriesChart(Chart):
         datasets.append(DataSet(type='line',
                                 label='Combined',
                                 borderColor='red',
-                                data=combined))
+                                data=sorted(combined, key=lambda e: e['x'])))
 
         if logger.isEnabledFor(logging.DEBUG):
             import pprint
