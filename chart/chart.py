@@ -60,6 +60,7 @@ class TimeSeriesChart(Chart):
         # transform to chart
         datasets = []
         for label in lines.keys():
+            # label is <client_id> ":" <server_id>
             (client_id, separator, server_id) = label.partition(":")
             client = Client.objects.get(id=client_id)
             server = Server.objects.get(id=server_id)
@@ -70,7 +71,7 @@ class TimeSeriesChart(Chart):
                          format(label, fancy_label))
 
             line = []
-            for key in lines[label].keys():
+            for key in sorted(lines[label].keys()):
                 upload = 0
                 for entry in lines[label][key]:
                     upload += entry[0]
