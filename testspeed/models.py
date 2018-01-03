@@ -44,7 +44,7 @@ class Result(models.Model):
     bytes_received = models.IntegerField()
 
     def __str__(self):
-        return "{0} has download{1}, upload:{2} and ping:{3} from {4}".format(
+        return "{0} has download:{1}, upload:{2} and ping:{3} from {4}".format(
             self.client.isp, self.download, self.upload, self.ping, self.server.name)
 
 

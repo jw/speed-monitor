@@ -16,7 +16,7 @@ class ServerViewSet(ModelViewSet):
     serializer_class = ServerSerializer
     queryset = Server.objects.all()
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('url',)
+    filter_fields = ('host',)
 
 
 class ResultViewSet(ModelViewSet):
