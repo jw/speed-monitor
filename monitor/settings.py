@@ -136,5 +136,9 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
+        'chart': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
     }
 }
