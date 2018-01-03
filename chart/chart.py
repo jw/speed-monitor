@@ -59,7 +59,9 @@ class TimeSeriesChart(Chart):
 
         # transform to chart
         datasets = []
+        combined = []
         for label in lines.keys():
+
             # label is <client_id> ":" <server_id>
             (client_id, separator, server_id) = label.partition(":")
             client = Client.objects.get(id=client_id)
@@ -77,11 +79,17 @@ class TimeSeriesChart(Chart):
                     upload += entry[0]
                 upload = upload / len(lines[label][key])
                 line.append({'x': str(key), 'y': upload})
+                combined.append({'x': str(key), 'y': upload})
 
             datasets.append(DataSet(type='line',
                                     label=fancy_label,
                                     borderColor="green",
                                     data=line))
+
+        datasets.append(DataSet(type='line',
+                                label='Combined',
+                                borderColor='red',
+                                data=combined))
 
         if logger.isEnabledFor(logging.DEBUG):
             import pprint
