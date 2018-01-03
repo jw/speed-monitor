@@ -15,6 +15,7 @@ class TimeSeriesChart(Chart):
     }
 
     def get_datasets(self, **kwargs):
+        """This is very likely way too slow!"""
 
         results = Result.objects.all()
 
@@ -27,8 +28,8 @@ class TimeSeriesChart(Chart):
         #
         #   label     is < client_id > ":" < server_id >
         #   timestamp is the timestamp a measurement was made
-        #   upload    is the number of bits where measured in upload
-        #   download  is the number of bits where measured in download
+        #   upload    is the number of bits per second in upload
+        #   download  is the number of bits per second in download
         #   ping      is the number of ms taken between the client server ping
         #
 
