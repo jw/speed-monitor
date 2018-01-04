@@ -60,37 +60,59 @@ class TimeSeriesChart(Chart):
 
         # transform to chart
         datasets = []
-        combined = []
+        upload_combined = []
+        download_combined = []
         for label in lines.keys():
 
             # label is <client_id> ":" <server_id>
             (client_id, separator, server_id) = label.partition(":")
             client = Client.objects.get(id=client_id)
             server = Server.objects.get(id=server_id)
-            fancy_label = "From {0} (in {1}) to {2} (in {3})".format(
+            fancy_label = "from {0} (in {1}) to {2} (in {3})".format(
                 client.ip, client.country.name,
                 server.host, server.country.name)
             logger.debug("Converted label {0} to {1}.".
                          format(label, fancy_label))
 
-            line = []
+            upload_line = []
+            download_line = []
             for key in sorted(lines[label].keys()):
+
                 upload = 0
+                download = 0
+
                 for entry in lines[label][key]:
                     upload += entry[0]
+                    download += entry[1]
                 upload = upload / len(lines[label][key])
-                line.append({'x': str(key), 'y': upload})
-                combined.append({'x': str(key), 'y': upload})
+                download = download / len(lines[label][key])
+
+                upload_line.append({'x': str(key), 'y': upload})
+                download_line.append({'x': str(key), 'y': download})
+                upload_combined.append({'x': str(key), 'y': upload})
+                download_combined.append({'x': str(key), 'y': download})
 
             datasets.append(DataSet(type='line',
-                                    label=fancy_label,
+                                    label="Upload " + fancy_label,
                                     borderColor="green",
-                                    data=line))
+                                    data=upload_line))
+
+            datasets.append(DataSet(type='line',
+                                    label="Download " + fancy_label,
+                                    borderColor="blue",
+                                    data=download_line))
 
         datasets.append(DataSet(type='line',
-                                label='Combined',
+                                label='Upload combined',
+                                borderColor='yellow',
+                                data=sorted(upload_combined,
+                                            key=lambda e: e['x'])))
+
+        datasets.append(DataSet(type='line',
+                                label='Download combined',
                                 borderColor='red',
-                                data=sorted(combined, key=lambda e: e['x'])))
+                                data=sorted(download_combined,
+                                            key=lambda e: e['x'])))
 
         if logger.isEnabledFor(logging.DEBUG):
             import pprint
