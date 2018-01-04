@@ -9,7 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class TimeSeriesChart(Chart):
+
     chart_type = 'line'
+
     scales = {
         'xAxes': [Axes(type='time', position='bottom')],
     }
