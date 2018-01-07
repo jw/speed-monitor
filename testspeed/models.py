@@ -8,6 +8,7 @@ class Client(models.Model):
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     isp = models.CharField(max_length=300)
     country = CountryField()
+    owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('ip', 'isp')
@@ -27,6 +28,7 @@ class Server(models.Model):
     host = models.CharField(unique=True, max_length=500)
     d = models.FloatField()
     latency = models.FloatField()
+    owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return '{0} in {1} at {2}km.'.format(
@@ -42,11 +44,8 @@ class Result(models.Model):
     timestamp = models.DateTimeField()
     bytes_sent = models.IntegerField()
     bytes_received = models.IntegerField()
+    owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return "{0} has download:{1}, upload:{2} and ping:{3} from {4}".format(
             self.client.isp, self.download, self.upload, self.ping, self.server.name)
-
-
-class Results(models.Model):
-    results = models.ManyToManyField(Result)

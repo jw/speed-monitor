@@ -6,10 +6,11 @@ from .models import Client, Server, Result
 
 class ClientSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(read_only=True)
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Client
-        fields = ('id', 'ip', 'lon', 'lat', 'isp', 'country')
+        fields = ('id', 'ip', 'lon', 'lat', 'isp', 'country', 'owner')
 
     def get_id(obj):
         return serializers.get_pk_field()
@@ -17,6 +18,7 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class ServerSerializer(CountryFieldMixin, serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(read_only=True)
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Server
@@ -27,9 +29,12 @@ class ServerSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
 
 class ResultSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+
     class Meta:
         model = Result
-        fields = ('client', 'download', 'upload', 'ping', 'server', 'timestamp', 'bytes_sent', 'bytes_received')
+        fields = ('owner', 'client', 'download', 'upload', 'ping',
+                  'server', 'timestamp', 'bytes_sent', 'bytes_received')
 
     def get_id(obj):
         return serializers.get_pk_field()
